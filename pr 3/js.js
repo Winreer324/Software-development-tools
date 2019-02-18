@@ -1,61 +1,47 @@
 let cinema;
 let cinemaPopup;
-let popup;
+let titlePopup; 
 
+let favoritesBool = false;
 let check = true;
 let content = document.getElementById("content");
 let back = document.getElementById("back");
 back.style.display = 'none';
 
+let favorites = document.getElementById("favorites");
+
+/// click popup
 let lol = document.getElementById("lol");
 lol.addEventListener("click",  function (e){
     let target = e.target; 
-    
-    console.log(this.value)
-    console.log(target.innerHTML) 
-
-    popup = target.innerHTML;
-    console.log(target.hasAttribute("h2"))
-    // popup.replace(' ', '&') 
-    console.log("popup = "+popup)
-      
-        fetchFilmThis();  
+     
+    titlePopup = target.innerHTML; 
+    console.log("titlePopup ="+ titlePopup);  
+    fetchFilmThis();   
 })
-
-
-
-
-
-//  todo сделать вывод
-// возврат контент (типа скрывать его при переходе, и возвращать по клику на кнопку назад ) 
-// добавить возможность в избранные 
-// locastorege
-// todo выводит несколько попапов (мб нужно очистить)
-
+ 
+// click search
 const fetchFilm = async () => {
-    event.preventDefault()
+    event.preventDefault() 
+    showHide()
+    content.style.display = ''; 
+    check = true;
 
     let input = document.getElementById("text"); 
 
-    document.getElementById("lol").innerHTML = '';
+    document.getElementById("lol").innerHTML = ''; 
 
-    // document.getElementById("images").innerHTML = '';
-    // document.getElementById("title").innerHTML = '';
-    // document.getElementById("year").innerHTML = '';
-    // document.getElementsByClassName("testT").innerHTML = '';
-
-    if(input.value == null || input.value == ""){alert("Пустые строки");}
+    // if(input.value == null || input.value == ""){alert("Пустые строки");}
 
     let url = "http://www.omdbapi.com/?apikey=d5677312&s="+input.value; 
-    
-    console.log(input.value);
-    console.log(url); 
+     
     try{
         let responce = await fetch(url);
         let json = await responce.json();
-        console.log(json)
+ 
         if(json.Error){ throw new Error(json.Error)} 
         cinema = json;
+        // create [i] elements with data 
         for (let i = 0; i < cinema.Search.length; i++) {
       
             let div = document.createElement("div"); 
@@ -66,73 +52,59 @@ const fetchFilm = async () => {
             h2.style.color = "darkblue";
             h2.style.textDecoration = "underline";
             h2.className = "title"; 
+            h2.id = "title"; 
             let p = document.createElement("p");
             p.className = "desc"; 
+            let favorites = document.createElement("div");
+            favorites.id = "favorites"; 
 
-            // h2.style.display = "inline-block";
             if (cinema.Search[i].Poster == 'N/A') {
                 continue;
             };
+
             img.src = cinema.Search[i].Poster; 
             h2.innerHTML = cinema.Search[i].Title; 
-            p.innerHTML = cinema.Search[i].Year;
-            // img.style.display = "block";
+            p.innerHTML = cinema.Search[i].Year; 
             div.style.display = "flex";
             div.style.height = "500px";
             div.style.width = "300px";
             div.style.margin = "10px";
-            div.style.flexWrap = "wrap";
-            // div.style.display = "inline-block";
-            // div.style.margin = "10px";
-            // img.style.display = "flex";
-            // img.style.justifyContent = "center";
-            // img.style.alignItems = "center";
-            // img.style.flexWrap = "wrap";
-            // console.log(cinema.Search[i].Title);
-            // console.log(cinema.Search[i].Year);
-
-            // img.appendChild(img);
-            // h2.appendChild(h2);
-            // img.append();
+            div.style.flexWrap = "wrap"; 
 
             div.appendChild(img);
-            div.appendChild(h2);
+            div.appendChild(h2); 
+
+            // chech favorites
+            let  str = cinema.Search[i].Title; 
+            for(let data in localStorage){ 
+                if(data == str){
+                    div.appendChild(favorites);
+                    favorites.style.background = "blue";
+                } 
+            }
+            
             div.appendChild(p);
-            document.getElementById("lol").appendChild(div)
-            // document.getElementById("lol").appendChild(h2);
-            // document.getElementById("lol").appendChild(p);
-
-            // document.getElementById("lol images").appendChild(img);
-            // document.getElementById("lol title").appendChild(h2);
-            // document.getElementById("lol year").appendChild(p);
+            document.getElementById("lol").appendChild(div) 
         } 
-    // console.log(json); 
-
+     
     } catch(e){
         alert(e);
     }
 } 
-
-const fetchFilmThis = async () =>{
-    event.preventDefault()
+// create popup
+const fetchFilmThis = async () =>{ 
 
     document.getElementById("popupFilm").innerHTML = '';
-    
-    console.log("popup") 
+     
     check = true;
     document.getElementById("lol").style.display = 'none'; 
     document.getElementById("popupFilm").style.display = 'block';
     
-    back.style.display = 'block';
-    // document.getElementById("lol").innerHTML = ''; 
-    // document.getElementById("content").innerHTML = ''; 
-
-    // if(input.value == null || input.value == ""){alert("Пустые строки");}
+    back.style.display = 'block'; 
  
-    let url = "http://www.omdbapi.com/?t="+popup+"&apikey=d5677312"; 
+    let url = "http://www.omdbapi.com/?t="+titlePopup+"&apikey=d5677312"; 
  
-    console.log(url);  
-    // console.log(input.value);
+    console.log(url);   
     /**
      * 
      * 
@@ -166,13 +138,15 @@ imdbVotes: "6,816"
     try{
         let responce = await fetch(url);
         let json = await responce.json();
-        // console.log(json)
+        console.log(json)
         if(json.Error){ throw new Error(json.Error)} 
         cinemaPopup = json; 
       
         let div = document.createElement("div");  
         let filmPoster = document.createElement("img")
         let filmTitle = document.createElement("h2");
+        let favorites = document.createElement("div");
+        favorites.id = "favorites";
         let filmPlot = document.createElement("h4"); 
         let filmYear = document.createElement("p");
         let filmimdbRating = document.createElement("p");
@@ -191,7 +165,7 @@ imdbVotes: "6,816"
         
         filmPoster.src = cinemaPopup.Poster; 
         // console.log(img.src = cinemaPopup.Poster); 
-        filmTitle.innerHTML = "Title: " + cinemaPopup.Title; 
+        filmTitle.innerHTML = cinemaPopup.Title; 
         // console.log(h2.innerHTML = cinemaPopup.Title); 
         filmPlot.innerHTML = "Plot: " + cinemaPopup.Plot; 
         filmYear.innerHTML = "Year: " + cinemaPopup.Year;
@@ -200,15 +174,39 @@ imdbVotes: "6,816"
         // console.log(p.innerHTML = cinemaPopup.Year);
 
         div.appendChild(filmPoster);
-        div.appendChild(filmTitle);
+        div.appendChild(filmTitle);  
+        
+        console.log(filmTitle.innerHTML)
+        // chech in popup favorites
+        for(let item in localStorage){ 
+            if(item == filmTitle.innerHTML){
+                div.appendChild(favorites);
+                favorites.style.background = "blue";
+            } 
+            else div.appendChild(favorites);
+        }
+
         div.appendChild(filmPlot);
         div.appendChild(filmYear);
         div.appendChild(filmimdbRating);
         div.appendChild(filmimdbVotes);
         document.getElementById("popupFilm").appendChild(div)
+ 
+        // add favorites
+        favorites.addEventListener("click", function(){ 
+            console.log("title popup = " + filmTitle.innerHTML)
 
-    console.log(json); 
-
+            favoritesBool = true;
+            for(let item in localStorage){ 
+                if(item == filmTitle.innerHTML){
+                    favoritesBool = false;
+                    console.log("delete = " + filmTitle.innerHTML);
+                    localStorage.removeItem(filmTitle.innerHTML); 
+                }  else if(favoritesBool)
+                {localStorage.setItem(filmTitle.innerHTML, filmTitle.innerHTML);}
+            } 
+          
+        }); 
     } catch(e){
         alert(e);
     }
@@ -216,17 +214,15 @@ imdbVotes: "6,816"
 
 function showHide(){ 
     if(check){
-        content.style.display = 'flex';
-        // content.innerHTML = "";
-        console.log(check)
+        content.style.display = 'flex'; 
         check = false;
         back.style.display = 'none';
         document.getElementById("lol").style.display = 'block'; 
         document.getElementById("popupFilm").style.display = 'none';
     }
     else if(!check){
-        content.style.display = '';
-        console.log(check)
+        content.style.display = ''; 
         check = true;  
-    }
+    } 
 }
+

@@ -10,7 +10,12 @@
     align-items: center;
     flex-wrap: wrap;
 } */
-
+#favorites {
+    /* content: ""; */
+    width: 30px;
+    height: 30px;
+    background: red;
+}
 #lol { 
      /* display: flex; */
     /* display: inline; 
