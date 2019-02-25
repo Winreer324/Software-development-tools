@@ -1,0 +1,123 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Start in Vue</title>
+     Bootstrap core CSS -->
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- Material Design Bootstrap -->
+    <!-- <link href="css/mdb.min.css" rel="stylesheet">
+    <style lang="scss">
+        #app {
+          font-family: 'Avenir', Helvetica, Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          text-align: left;
+          width: 640px;
+          margin: 0 auto;
+          color: #2c3e50;
+          margin-top: 60px;
+        }
+        </style>
+</head>
+
+<body>
+  
+ 
+    <div id="app">  
+      <div class="hello">
+        <h1>Your IP is {{ ip }}</h1>
+        <input type="text" v-model="input.firstname" placeholder="First Name" />
+        <input type="text" v-model="input.lastname" placeholder="Last Name" />
+        <button v-on:click="sendData()">Send</button>
+        <br />
+        <br />
+        <textarea>{{ response }}</textarea>
+    </div>   -->
+          <!-- <div class="loading" v-if="loading">
+            Loading...
+          </div>
+      
+          <div v-if="error" class="error">
+            {{ error }}
+          </div>
+      
+          <div v-if="post" class="content">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.body }}</p>
+          </div> --> 
+      <!-- </div>  -->
+        <!-- <section v-if="errored">
+          <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
+        </section>
+      
+        <section v-else>
+          <div v-if="loading">Loading...</div>
+      
+          <div
+            v-else
+            v-for="currency in info"
+            class="currency"
+          >
+            {{ currency.description }}:
+            <span class="lighten">
+              <span v-html="currency.symbol"></span>{{ currency.rate_float | currencydecimal }}
+            </span>
+          </div>
+      
+        </section> --> 
+      <!-- <div id="weather">
+          {{getTemp}}
+      </div> -->
+     
+
+    <!-- add vue -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <!-- <script src="js.js"></script> -->
+    <!-- Bootstrap tooltips -->
+    <!-- <script type="text/javascript" src="js/popper.min.js"></script> -->
+    <!-- Bootstrap core JavaScript -->
+    <!-- <script type="text/javascript" src="js/bootstrap.min.js"></script> -->
+    <!-- MDB core JavaScript -->
+    <!-- <script type="text/javascript" src="js/mdb.min.js"></script> -->
+    
+<!-- </body> -->
+
+<!-- </html> -->  
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>The greatest news app ever</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css">
+  </head>
+  <body>
+    <div class="container" id="app">
+      <h3 class="text-center">VueNews</h3>
+      <div class="columns text-center">
+          <input v-model="message">
+          <button v-on:click="fetchFilm">Search</button>
+      </div>
+      <div class="columns medium-3" v-for="result in results">
+        <div class="card">
+          <div class="card-divider">
+              <img v-bind:src="result.Poster" alt="" /> 
+          </div>
+          <div class="card-section">
+            <p>{{ result.Title }}.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script> 
+    <script src="https://cdn.jsdelivr.net/vue.resource/1.2.1/vue-resource.min.js"></script> 
+    <script src="js.js"></script>
+  </body>
+</html>
